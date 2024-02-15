@@ -11,7 +11,6 @@ data = {
 function openJobMenu()
     lib.registerMenu(data)
     lib.showMenu("some_menu_id")
-    xPlayer.removeInventoryItem(item, count)
 end
 
 RegisterCommand("openmenu", function()
