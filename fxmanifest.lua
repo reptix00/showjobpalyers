@@ -3,8 +3,8 @@ games { 'gta5' }
 use_experimental_fxv2_oal 'yes'
 lua54 'yes'
 
-author 'm-dev.eu'
-description 'Wheelclamp'
+author 'Reptix'
+description 'Jobplayercount'
 version '1.0'
 
 dependencies {
@@ -26,6 +26,3 @@ server_scripts {
     '@oxmysql/lib/MySQL.lua',
     'server.lua'
 }
-
-
--- setr mdevelopment:framework "esx"
