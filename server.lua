@@ -1,43 +1,30 @@
-
-
-
-Citizen.CreateThread (function ()
-    
-end)
-
-
-lib.callback.register('getPlayersName', function (source)
-
+lib.callback.register('getJobPlayers', function (source)
     local playerId = source
     local xPlayer = ESX.GetPlayerFromId(playerId)
 
+    local job = xPlayer?.getJob()
+    if job.name == 'unemployed' then return {}, {} end
 
-    local xPlayers = ESX.GetExtendedPlayers('job', 'police')
+    local xPlayers = ESX.GetExtendedPlayers('job', job)
     local playersTable = {}
 
-
-    if xPlayers == nil then
-        print("No players found")
-    end
-
-
-    if xPlayers ~= nil then
-        for k,v in pairs(xPlayers) do
-            playersTable[k] = v.getName()
+    if next(xPlayers) then
+        for k,xTarget in pairs(xPlayers) do
+            playersTable[k] = xTarget.getName()
         end
 
-        return playersTable
+        return playersTable, {name = job.name, label = job.label, num = #xPlayers}
     end
  
 
-    return "Kein Spieler gefunden"
+    return {}, {}
 end)
 
 
-lib.callback.register('getPlayers', function (source, name)
-    local xPlayers = ESX.GetExtendedPlayers("name", name)
-    for k,v in pairs(xPlayers) do
-            local targetCoords = xPlayers[k].getCoords()
-            return targetCoords
-    end
+lib.callback.register('getPlayerCoords', function (source, name)
+    local xTarget = ESX.GetExtendedPlayers('name', name)
+    if not next(xTarget) then return false end
+    xTarget = xTarget[1]
+
+    return xTarget.getCoords()
 end)
